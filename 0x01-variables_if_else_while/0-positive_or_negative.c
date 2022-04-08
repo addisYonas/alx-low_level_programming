@@ -1,11 +1,11 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
- /**
- * main - Entry point
- * Get random number and print
- * and check the output if postive,negative or zero
- * Return: Always 0 (Success)
+#include <stdio.h>
+/**
+ * main - main block
+ * Description: Get a random number
+ * and check out put positive, negative, or zero
+ * Return: 0
  */
 int main(void)
 {
@@ -19,6 +19,5 @@ int main(void)
 		printf("%i is negative\n", n);
 	else
 		printf("%i is zero\n", n);
-
 	return (0);
 }
