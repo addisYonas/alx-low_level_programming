@@ -8,7 +8,7 @@
  */
 int main(void)
 {
-	char ch[] = "abcdefghijklmnopqrstuvwxyz\n";
+	char ch[] = "abcdefghijklmnopqrstuvwxyz";
 	int i;
 	int arrayLength = strlen(ch);
 
