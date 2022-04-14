@@ -1,8 +1,8 @@
 #include "main.h"
 
 /**
- * print_number - prints numbers
- * @n: number to be printed
+ * print_triangle - check for a digit
+ * @size : integer type
  * Return:void
  */
 
