@@ -2,7 +2,8 @@
 
 /**
  * swap_int - swaps the value of tow integers
- *
+ * @a: pointer 1
+ * @b: pointer 2
  * Return:void
  */
 
