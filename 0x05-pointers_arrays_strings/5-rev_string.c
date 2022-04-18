@@ -13,13 +13,13 @@ void rev_string(char *s)
 
 	while (s[count] != '\0')
 		count++;
-	
+
 	i = 0;
 	j = count / 2;
 	while (j--)
 	{
 		temp = s[count - i - 1];
-		s[count -i -1] = s[i];
+		s[count - i - 1] = s[i];
 		s[i] = temp;
 		i++;
 	}
