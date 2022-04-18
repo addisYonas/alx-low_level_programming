@@ -2,7 +2,7 @@
 
 /**
  * print_rev - string in reverse
- * @str: string to check
+ * @s: string to check
  * Return: Always 0.
  */
 
