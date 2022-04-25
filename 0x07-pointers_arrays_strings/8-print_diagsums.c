@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "main.h"
 /**
  * print_diagsums - description
@@ -15,4 +16,6 @@ void print_diagsums(int *a, int size)
 		sum1 += a[size - i];
 		a += size;
 	}
+	printf("%d, ", sum);
+	printf("%d\n", sum1);
 }
