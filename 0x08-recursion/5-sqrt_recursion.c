@@ -3,27 +3,28 @@
 /**
  * _sqrt_recursion - find natural square root
  * @n: int
+ * @val: square root
  * Return: int
  */
-
+int square(int n, int val);
 int _sqrt_recursion(int n)
 {
 return (square(n, 1));
 }
 
 /**
- * square -find square root
+ * square - find square root
  * @n: int to find square root
  * @val: square root
- * Return:int
+ * Return: int
  */
 
 int square(int n, int val)
 {
-	if (val * val == n)
+if (val * val == n)
 	return (val);
-	else if (val * val < n)
+else if (val * val < n)
 	return  (square(n, val + 1));
-	else
+else
 	return (-1);
 }
