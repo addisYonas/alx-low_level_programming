@@ -7,8 +7,15 @@
  * Return: 0
  */
 
-int main(int argc, char *argv[] __attribute__((unused)))
+int main(int argc, char const *argv[])
 {
-	printf("%d\n", argc - 1);
-	return (0);
+int i = 0;
+
+while (argc--)
+{
+	printf("%s\n", argv[i]);
+	i++;
+}
+
+return (0);
 }
