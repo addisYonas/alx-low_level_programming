@@ -1,131 +1,148 @@
 #include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <stddef.h>
 /**
- * main - multiplies two positive numbers
- * @argc: argument count
- * @argv: argument vectors
- * Return: 0
+ * initDigitArray - allocates and sets to 0 an array to contain the digits
+ *   of a base 10 number
+ *
+ * @size: array size
+ * Return: pointer to initialized array, or NULL on failure
  */
-int main(int argc, char *argv[])
+unsigned int *initDigitArray(size_t size)
 {
-	char *f = argv[1];
-	char *s = argv[2];
+	unsigned int *arr = NULL;
+	size_t i;
 
-	if (argc != 3 || !onlyNumbers(f) || !onlyNumbers(s))
-	{
-		printf("Error\n");
-		exit(98);
-	}
-	if (*f == 48 || *s == 48)
-		printf("0\n");
-	else
-		multiply(s, f);
-	return (0);
+	arr = malloc(sizeof(unsigned int) * size);
+	if (!arr)
+		return (NULL);
+
+	for (i = 0; i < size; i++)
+		arr[i] = 0;
+
+	return (arr);
 }
 
-/**
- * multiply - multiplies two numbers and displays it
- * @f: first "number"
- * @s: second "number"
- */
-void multiply(char *f, char *s)
-{
-	int i, len1, len2, total, fdigit, sdigit, res = 0, tmp;
-	int *ptr;
 
-	len1 = _strlen(f);
-	len2 = _strlen(s);
-	tmp = len2;
-	total = len1 + len2;
-	ptr = _calloc(sizeof(int), (len1 + len2));
-	for (len1--; len1 >= 0; len1--)
+/**
+ * stringIntMultiply - TBD
+ *
+ * @prod_digits: array to store digits of product
+ * @n1_digits: string containing multiplicand digits in ASCII
+ * @n2_digits: string containing multiplier digits in ASCII
+ * @n1_len: amount of digits in multiplicand
+ * @n2_len: amount of digits in multiplier
+ */
+void stringIntMultiply(unsigned int *prod_digits, char *n1_digits,
+		       char *n2_digits, size_t n1_len, size_t n2_len)
+{
+	int i, j, sum;
+	unsigned char digit1, digit2;
+
+	if (prod_digits == NULL || n1_digits == NULL || n2_digits == NULL)
+		return;
+
+	for (i = n1_len - 1; i >= 0; i--)
 	{
-		fdigit = f[len1] - '0';
-		res = 0;
-		len2 = tmp;
-		for (len2--; len2 >= 0; len2--)
+		sum = 0;
+		digit1 = n1_digits[i] - '0';
+
+		for (j = n2_len - 1; j >= 0; j--)
 		{
-			sdigit = s[len2] - '0';
-			res += ptr[len2 + len1 + 1] + (fdigit * sdigit);
-			ptr[len1 + len2 + 1] = res % 10;
-			res /= 10;
+			digit2 = n2_digits[j] - '0';
+
+			sum += prod_digits[i + j + 1] + (digit1 * digit2);
+
+			prod_digits[i + j + 1] = sum % 10;
+
+			sum /= 10;
 		}
-		if (res)
-			ptr[len1 + len2 + 1] = res % 10;
+
+		if (sum > 0)
+			prod_digits[i + j + 1] += sum;
 	}
-	while (*ptr == 0)
-	{
-		ptr++;
-		total--;
-	}
-	for (i = 0; i < total; i++)
-		printf("%i", ptr[i]);
-	printf("\n");
 }
+
+
 /**
- * onlyNumbers - determines if string has only numbers
- * @c: input string
- * Return: 0 if false, 1 if true
+ * stringIsPosInt - validates if string represents a positive integer
+ *
+ * @s: string to test
+ * Return: 1 if true, 0 if false
  */
-int onlyNumbers(char *c)
+int stringIsPosInt(char *s)
 {
-	while (*c)
+	size_t i;
+
+	for (i = 0; s[i]; i++)
 	{
-		if (*c < '0' || *c > '9')
+		if (s[i] < '0' || s[i] > '9')
 			return (0);
-		c++;
 	}
+
 	return (1);
 }
 
-/**
- * _strlen - returns the length of a string
- * @s: string s
- * Return: length of string
- */
-int _strlen(char *s)
-{
-	char *p = s;
-
-	while (*s)
-		s++;
-	return (s - p);
-}
 
 /**
- * _memset - fills memory with a constant byte
- * @s: memory area
- * @b: constant byte
- * @n: bytes of the memory area
- * Return: pointer to the memory area s
+ * error - error return
+ *
+ * @status: error code to exit with
  */
-char *_memset(char *s, char b, unsigned int n)
+void error(int status)
 {
-	char *ptr = s;
-
-	while (n--)
-		*s++ = b;
-	return (ptr);
+	_putchar('E');
+	_putchar('r');
+	_putchar('r');
+	_putchar('o');
+	_putchar('r');
+	_putchar('\n');
+	exit(status);
 }
+
 
 /**
- * _calloc - allocates memory for an array, using malloc
- * @nmemb: number of elements of pointer
- * @size: size of each member
- * Return: pointer of allocated memory
+ * main - entry point
+ *
+ * @argc: number of commmand line arguments
+ * @argv: array of commmand line arguments
+ * Return: 0 on success, 98 on failure
  */
-void *_calloc(unsigned int nmemb, unsigned int size)
+int main(int argc, char **argv)
 {
-	void *ptr;
+	size_t i, av1_len, av2_len, prod_len;
+	unsigned int *prod_digits = NULL;
 
-	if (!nmemb || !size)
-		return (NULL);
-	ptr = malloc(size * nmemb);
-	if (!ptr)
-		return (NULL);
-	_memset(ptr, 0, size * nmemb);
-	return (ptr);
+	if (argc != 3 || !stringIsPosInt(argv[1]) ||
+	    !stringIsPosInt(argv[2]))
+		error(98);
+
+	for (i = 0, av1_len = 0; argv[1][i]; i++)
+		av1_len++;
+
+	for (i = 0, av2_len = 0; argv[2][i]; i++)
+		av2_len++;
+
+	prod_len = av1_len + av2_len;
+	prod_digits = initDigitArray(prod_len);
+	if (prod_digits == NULL)
+		error(98);
+
+	stringIntMultiply(prod_digits, argv[1], argv[2], av1_len, av2_len);
+
+	/* omit leading zeroes */
+	for (i = 0; !prod_digits[i] && i < prod_len; i++)
+	{}
+
+	if (i == prod_len)
+		_putchar('0');
+
+	for (; i < prod_len; i++)
+		_putchar(prod_digits[i] + '0');
+	_putchar('\n');
+
+	free(prod_digits);
+
+	return (0);
 }
-
