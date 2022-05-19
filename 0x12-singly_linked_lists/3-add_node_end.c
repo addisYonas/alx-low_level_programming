@@ -2,9 +2,10 @@
 #include <string.h>
 
 /**
- * add_node_end - add new node at end
- * @head: point to the head
+ * add_node_end - adds a node at the end, my dude
+ * @head: points to the head
  * @str: the string to put into it
+ * Return: pointer to new node or NULL
  */
 
 list_t *add_node_end(list_t **head, const char *str)
