@@ -2,10 +2,9 @@
 #include <stdio.h>
 
 /**
- * print_listint - print elements of linkedlist
- * @h: linked list
- *
- * Return: number of nodes
+ * print_listint - A function that prints all the elements in the list
+ * @h: A pointer to listint structure
+ * Return: the number of nodes.
  */
 
 size_t print_listint(const listint_t *h)
@@ -19,5 +18,6 @@ size_t print_listint(const listint_t *h)
 		current = current->next;
 		nbr_nodes++;
 	}
+
 	return (nbr_nodes);
 }
