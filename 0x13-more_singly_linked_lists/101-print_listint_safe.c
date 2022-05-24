@@ -1,34 +1,61 @@
 #include "lists.h"
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /**
- * print_listint_safe - A function that prints the elementsin a  list
- * @head: A pointer to listint_t structure
- * Return: The number of nodes. Exits with 98 on failure
+ * _r - reallocates memory for an array of pointers
+ * to the nodes in a linked list
+ * @list: the old list to append
+ * @size: size of the new list (always one more than the old list)
+ * @new: new node to add to the list
+ *
+ * Return: pointer to the new list
+ */
+const listint_t **_r(const listint_t **list, size_t size, const listint_t *new)
+{
+	const listint_t **newlist;
+	size_t i;
+
+	newlist = malloc(size * sizeof(listint_t *));
+	if (newlist == NULL)
+	{
+		free(list);
+		exit(98);
+	}
+	for (i = 0; i < size - 1; i++)
+		newlist[i] = list[i];
+	newlist[i] = new;
+	free(list);
+	return (newlist);
+}
+
+/**
+ * print_listint_safe - prints a listint_t linked list.
+ * @head: pointer to the start of the list
+ *
+ * Return: the number of nodes in the list
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	size_t nodes = 0;
-	const listint_t *one = head, *two = head;
+	size_t i, num = 0;
+	const listint_t **list = NULL;
 
-	if (head == NULL)
-		exit(98);
-
-	while (one && two && two->next && head)
+	while (head != NULL)
 	{
-		one = one->next;
-		two = two->next->next;
-		if (one == two)
+		for (i = 0; i < num; i++)
 		{
-			printf("-> [%p] %d\n", (void *)head, head->n);
-			exit(98);
+			if (head == list[i])
+			{
+				printf("-> [%p] %d\n", (void *)head, head->n);
+				free(list);
+				return (num);
+			}
 		}
-
+		num++;
+		list = _r(list, num, head);
 		printf("[%p] %d\n", (void *)head, head->n);
 		head = head->next;
-		nodes++;
 	}
-	head = NULL;
-	return (nodes);
+	free(list);
+	return (num);
 }
