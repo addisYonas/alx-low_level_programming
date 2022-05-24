@@ -1,4 +1,5 @@
 #include "lists.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 /**
@@ -10,14 +11,14 @@
 
 size_t print_listint(const listint_t *h)
 {
-	size_t nodes = 0;
-	const listint_t *s = h;
+	size_t nbr_nodes = 0;
+	const listint_t *current = h;
 
-	while (s != NULL)
+	while (current != NULL)
 	{
-		printf("%i\n", s->n);
-		s = s->next;
-		nodes++;
+		printf("%i\n", current->n);
+		current = current->next;
+		nbr_nodes++;
 	}
-	return (nodes);
+	return (nbr_nodes);
 }
