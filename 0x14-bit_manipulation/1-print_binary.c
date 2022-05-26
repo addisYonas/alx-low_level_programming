@@ -1,52 +1,48 @@
 #include "main.h"
 
 /**
- * _pow_recursion - Search a string for any of a set of bytes.
- * @x: base
- * @y: exposant
- * Return: Pointer to the byte in `s` that matches one of the bytes in `accept`
- * or NULL if no such byte is found.
+ * _pow - calculates (base ^ power)
+ * @base: base of the exponent
+ * @power: power of the exponent
+ *
+ * Return: value of (base ^ power)
  */
-
-unsigned long int _pow_recursion(int x, int y)
+unsigned long int _pow(unsigned int base, unsigned int power)
 {
+	unsigned long int num;
+	unsigned int i;
 
-if (y < 0)
-	return (-1);
-else if (y == 1)
-	return (x);
-else if (y == 0)
-	return (1);
-
-return (x * _pow_recursion(x, y - 1));
-
+	num = 1;
+	for (i = 1; i <= power; i++)
+		num *= base;
+	return (num);
 }
 
-
 /**
- * print_binary - prints decimal to binary
- * Description: first, finds the biggest exponent for 2, then go down
- * to find the smaller values
- * @n: decimal number
+ * print_binary - prints a number in binary notation
+ * @n: number to print
+ *
+ * Return: void
  */
-
 void print_binary(unsigned long int n)
 {
-	int i;
+	unsigned long int divisor, check;
+	char flag;
 
-	for (i = 0; _pow_recursion(2, i) <= n; i++)
-	;
-	if (n == 0)
-		i++;
-
-	for (i--; i >= 0; i--)
+	flag = 0;
+	divisor = _pow(2, sizeof(unsigned long int) * 8 - 1);
+	while (divisor != 0)
 	{
-		if (_pow_recursion(2, i) <= n)
+		check = n & divisor;
+		if (check == divisor)
 		{
+			flag = 1;
 			_putchar('1');
-			n -= _pow_recursion(2, i);
 		}
-		else
+		else if (flag == 1 || divisor == 1)
+		{
 			_putchar('0');
+		}
+		divisor >>= 1;
 	}
 }
