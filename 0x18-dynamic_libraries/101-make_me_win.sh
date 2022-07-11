@@ -1,3 +1,3 @@
 #!/bin/bash
-wget -O /tmp/cracking_output.so https://raw.github.com/kateincoding/holbertonschool-low_level_programming/main/0x18-dynamic_libraries/cracking_output.so
-export LD_PRELOAD=/tmp/cracking_output.so
+wget -O /tmp/win.so https://github.com/addisYonas/alx-low_level_programming/raw/master/0x18-dynamic_libraries/win.so
+export LD_PRELOAD=/tmp/win.so
